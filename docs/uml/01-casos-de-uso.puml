@@ -1,0 +1,72 @@
+@startuml casos-de-uso
+' Diagrama de Casos de Uso - Sistema de Aluguel de Carros
+' LAB02 - DIAW - PUC Minas
+
+left to right direction
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+
+title Sistema de Aluguel de Carros - Diagrama de Casos de Uso
+
+actor "Cliente" as Cliente
+actor "Agente" as Agente
+actor "Empresa" as Empresa
+actor "Banco" as Banco
+
+Agente <|-- Empresa
+Agente <|-- Banco
+
+rectangle "Sistema de Aluguel de Carros" {
+
+  usecase "Cadastrar-se" as UC_Cadastro
+  usecase "Autenticar (Login)" as UC_Login
+
+  usecase "Criar pedido de aluguel" as UC_CriarPedido
+  usecase "Modificar pedido de aluguel" as UC_ModificarPedido
+  usecase "Consultar pedido de aluguel" as UC_ConsultarPedido
+  usecase "Cancelar pedido de aluguel" as UC_CancelarPedido
+  usecase "Visualizar status do pedido" as UC_StatusPedido
+
+  usecase "Gerenciar dados do cliente\n(CRUD)" as UC_CrudCliente
+
+  usecase "Avaliar pedido\n(análise financeira)" as UC_AvaliarPedido
+  usecase "Emitir parecer" as UC_Parecer
+  usecase "Executar contrato" as UC_Contrato
+
+  usecase "Conceder contrato de crédito" as UC_Credito
+  usecase "Gerenciar automóveis" as UC_CrudAutomovel
+}
+
+' O login é pré-requisito para as operações internas
+UC_CriarPedido ..> UC_Login : <<include>>
+UC_ModificarPedido ..> UC_Login : <<include>>
+UC_ConsultarPedido ..> UC_Login : <<include>>
+UC_CancelarPedido ..> UC_Login : <<include>>
+UC_StatusPedido ..> UC_Login : <<include>>
+UC_AvaliarPedido ..> UC_Login : <<include>>
+UC_CrudCliente ..> UC_Login : <<include>>
+
+UC_Parecer ..> UC_AvaliarPedido : <<extend>>
+UC_Contrato ..> UC_Parecer : <<extend>>
+
+' Relacionamentos Cliente
+Cliente --> UC_Cadastro
+Cliente --> UC_Login
+Cliente --> UC_CriarPedido
+Cliente --> UC_ModificarPedido
+Cliente --> UC_ConsultarPedido
+Cliente --> UC_CancelarPedido
+Cliente --> UC_StatusPedido
+Cliente --> UC_CrudCliente
+
+' Relacionamentos Agente
+Agente --> UC_Login
+Agente --> UC_ModificarPedido
+Agente --> UC_AvaliarPedido
+Agente --> UC_Contrato
+Agente --> UC_CrudAutomovel
+
+' Banco pode conceder crédito
+Banco --> UC_Credito
+
+@enduml

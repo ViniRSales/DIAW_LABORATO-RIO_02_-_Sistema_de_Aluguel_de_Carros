@@ -1,0 +1,50 @@
+@startuml diagrama-de-pacotes
+' Diagrama de Pacotes (Visao Logica) - Sistema de Aluguel de Carros
+' LAB02 - DIAW - PUC Minas
+' Arquitetura MVC em camadas (Spring Boot) + Front-end (React/Vite)
+
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+title Sistema de Aluguel de Carros - Diagrama de Pacotes (Visao Logica)
+
+package "Front-end (React + Vite)" as FE {
+  package "pages" as FE_pages
+  package "components" as FE_comp
+  package "services (HTTP/Axios)" as FE_svc
+  package "hooks" as FE_hooks
+}
+
+package "Back-end (Spring Boot - MVC)" as BE {
+  package "controller" as BE_controller
+  package "service" as BE_service
+  package "repository" as BE_repository
+  package "model (entidades JPA)" as BE_model
+  package "dto" as BE_dto
+  package "config" as BE_config
+  package "security" as BE_security
+  package "exception" as BE_exception
+}
+
+package "Banco de Dados\nSupabase (PostgreSQL)" as DB {
+}
+
+' Dependencias Front-end
+FE_pages ..> FE_comp
+FE_pages ..> FE_svc
+FE_pages ..> FE_hooks
+FE_svc ..> BE_controller : HTTP/REST (JSON)
+
+' Dependencias Back-end (fluxo MVC em camadas)
+BE_controller ..> BE_service
+BE_controller ..> BE_dto
+BE_security ..> BE_controller
+BE_service ..> BE_repository
+BE_service ..> BE_model
+BE_service ..> BE_dto
+BE_repository ..> BE_model
+BE_repository ..> DB
+BE_config ..> BE_security
+BE_exception ..> BE_controller
+
+@enduml

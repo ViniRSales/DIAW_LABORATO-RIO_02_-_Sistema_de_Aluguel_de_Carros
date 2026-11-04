@@ -1,0 +1,129 @@
+@startuml diagrama-de-classes
+' Diagrama de Classes (Modelo de Domínio) - Sistema de Aluguel de Carros
+' LAB02 - DIAW - PUC Minas
+
+skinparam classAttributeIconSize 0
+hide circle
+skinparam linetype ortho
+
+title Sistema de Aluguel de Carros - Diagrama de Classes
+
+enum PerfilUsuario {
+  CLIENTE
+  AGENTE
+}
+
+enum TipoAgente {
+  EMPRESA
+  BANCO
+}
+
+enum StatusPedido {
+  CRIADO
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+  CANCELADO
+  CONTRATADO
+}
+
+enum TipoProprietario {
+  CLIENTE
+  EMPRESA
+  BANCO
+}
+
+class Usuario {
+  - id: Long
+  - username: String
+  - senha: String
+  - email: String
+  - perfil: PerfilUsuario
+  + autenticar(): boolean
+}
+
+class Cliente {
+  - id: Long
+  - rg: String
+  - cpf: String
+  - nome: String
+  - endereco: String
+  - profissao: String
+}
+
+class Agente {
+  - id: Long
+  - nome: String
+  - tipo: TipoAgente
+}
+
+class EntidadeEmpregadora {
+  - id: Long
+  - nome: String
+  - rendimento: BigDecimal
+}
+
+class Automovel {
+  - id: Long
+  - matricula: String
+  - ano: Integer
+  - marca: String
+  - modelo: String
+  - placa: String
+  - tipoProprietario: TipoProprietario
+}
+
+class PedidoAluguel {
+  - id: Long
+  - dataCriacao: LocalDateTime
+  - status: StatusPedido
+  - valorMensal: BigDecimal
+  + criar(): void
+  + modificar(): void
+  + cancelar(): void
+}
+
+class Avaliacao {
+  - id: Long
+  - data: LocalDateTime
+  - parecerPositivo: boolean
+  - observacao: String
+}
+
+class Contrato {
+  - id: Long
+  - dataInicio: LocalDate
+  - dataFim: LocalDate
+  - valorTotal: BigDecimal
+}
+
+class ContratoCredito {
+  - id: Long
+  - valorFinanciado: BigDecimal
+  - numeroParcelas: Integer
+  - taxaJuros: BigDecimal
+}
+
+' Herança / especialização de usuário
+Usuario <|-- Cliente
+Usuario <|-- Agente
+
+' Cliente possui no máximo 3 entidades empregadoras (com rendimento)
+Cliente "1" o-- "0..3" EntidadeEmpregadora : empregadoras
+
+' Pedido pertence a um cliente e a um automóvel
+Cliente "1" -- "0..*" PedidoAluguel : realiza
+PedidoAluguel "0..*" -- "1" Automovel : refere-se a
+
+' Agente avalia pedidos
+Agente "1" -- "0..*" Avaliacao : emite
+PedidoAluguel "1" -- "0..*" Avaliacao : recebe
+
+' Contrato resulta de um pedido aprovado
+PedidoAluguel "1" -- "0..1" Contrato : gera
+Contrato "0..1" -- "0..1" ContratoCredito : associa
+
+' Banco (agente) concede o contrato de crédito
+Agente "1" -- "0..*" ContratoCredito : concede
+
+@enduml
