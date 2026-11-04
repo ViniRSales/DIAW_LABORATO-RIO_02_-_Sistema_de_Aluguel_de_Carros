@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CarIcon from '../components/CarIcon.jsx'
+import CarImage from '../components/CarImage.jsx'
 import { automovelService } from '../services/pedidoService'
 
 // Catalogo visual de automoveis da frota, com cards modernos (paleta azul).
@@ -65,7 +65,7 @@ export default function Automoveis() {
             <article className="car-card" key={a.id}>
               <div className="car-card-art">
                 <span className="car-cat-tag">{a.categoria || 'Veículo'}</span>
-                <CarIcon categoria={a.categoria || ''} size={120} />
+                <CarImage marca={a.marca} modelo={a.modelo} categoria={a.categoria} />
               </div>
               <div className="car-card-body">
                 <h3>{a.marca} {a.modelo}</h3>

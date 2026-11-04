@@ -1,5 +1,6 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
+import Logo from './Logo.jsx'
 
 // Layout com barra de navegacao presente nas telas internas.
 export default function Layout() {
@@ -14,7 +15,7 @@ export default function Layout() {
   return (
     <div>
       <header className="navbar">
-        <div className="navbar-brand">🚗 Aluguel de Carros</div>
+        <div className="navbar-brand"><Logo size={24} /> Aluguel de Carros</div>
         <nav className="navbar-links">
           <Link to="/automoveis">Frota</Link>
           <Link to="/clientes">Clientes</Link>
