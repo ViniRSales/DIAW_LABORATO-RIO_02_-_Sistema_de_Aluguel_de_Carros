@@ -1,0 +1,249 @@
+:root {
+  --cor-primaria: #2563eb;
+  --cor-primaria-escura: #1d4ed8;
+  --cor-perigo: #dc2626;
+  --cor-texto: #1f2937;
+  --cor-borda: #d1d5db;
+  --cor-fundo: #f3f4f6;
+  --cor-card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+h1, h2, h3 {
+  margin: 0 0 0.5rem;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.navbar-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* ===== Layout ===== */
+.container {
+  max-width: 960px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.mt { margin-top: 1.5rem; }
+
+/* ===== Card ===== */
+.card {
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ===== Formularios ===== */
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+input, select {
+  padding: 0.5rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1rem;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.empregadora-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr auto;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hint {
+  color: #92400e;
+  font-size: 0.85rem;
+}
+
+/* ===== Botoes ===== */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--cor-texto);
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn:hover { background: #f9fafb; }
+
+.btn-sm { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+
+.btn-primary {
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  color: #fff;
+}
+
+.btn-primary:hover { background: var(--cor-primaria-escura); }
+
+.btn-danger {
+  background: var(--cor-perigo);
+  border-color: var(--cor-perigo);
+  color: #fff;
+}
+
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ===== Tabela ===== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--cor-borda);
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.table th {
+  background: #f9fafb;
+}
+
+.actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* ===== Status ===== */
+.status {
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-criado { background: #e0e7ff; color: #3730a3; }
+.status-em_analise { background: #fef3c7; color: #92400e; }
+.status-aprovado { background: #d1fae5; color: #065f46; }
+.status-reprovado { background: #fee2e2; color: #991b1b; }
+.status-cancelado { background: #e5e7eb; color: #374151; }
+.status-contratado { background: #dbeafe; color: #1e40af; }
+
+/* ===== Autenticacao ===== */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-card h1 { font-size: 1.2rem; }
+.auth-card h2 { font-weight: 500; color: #6b7280; font-size: 1rem; margin-bottom: 1rem; }
+
+.auth-footer {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* ===== Alertas ===== */
+.alert {
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.alert-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+@media (max-width: 640px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .navbar { flex-wrap: wrap; }
+}
