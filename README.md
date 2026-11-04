@@ -8,7 +8,7 @@ Projeto desenvolvido para o **Laboratório 02 (LAB02)** da disciplina **DIAW —
 
 ## 🚧 Status do Projeto
 
-🟡 **Em desenvolvimento** — protótipo funcional (modelagem UML, autenticação, CRUD de cliente e protótipo de pedidos de aluguel).
+🟡 **Em desenvolvimento** — protótipo funcional (modelagem UML, autenticação, CRUD de cliente, catálogo de frota e protótipo de pedidos de aluguel).
 
 ---
 
@@ -18,6 +18,7 @@ Projeto desenvolvido para o **Laboratório 02 (LAB02)** da disciplina **DIAW —
 - [Funcionalidades Principais](#-funcionalidades-principais)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Arquitetura](#-arquitetura)
+- [Catálogo de Frota](#-catálogo-de-frota)
 - [Modelagem (UML)](#-modelagem-uml)
 - [Instalação e Execução](#-instalação-e-execução)
   - [Pré-requisitos](#pré-requisitos)
@@ -60,9 +61,11 @@ Sobre os dados do domínio:
 
 - 🔐 **Autenticação obrigatória:** cadastro e login (usuário e senha) com JWT; acesso restrito a usuários cadastrados.
 - 👤 **CRUD de Cliente:** criar, consultar, atualizar e remover clientes, incluindo as entidades empregadoras (máx. 3).
+- 🚘 **Catálogo de frota:** vitrine de automóveis com cards modernos (paleta azul), filtro por categoria e foto real de cada modelo.
 - 📄 **Pedidos de aluguel (protótipo):** criação e visualização do status do pedido (`CRIADO`, `EM_ANALISE`, `APROVADO`, `REPROVADO`, `CANCELADO`, `CONTRATADO`).
 - 🧮 **Avaliação de pedidos (agentes):** emissão de parecer positivo/negativo pelos agentes.
-- 🚙 **Cadastro de automóveis:** matrícula, ano, marca, modelo, placa e tipo de proprietário.
+- 🚙 **Cadastro de automóveis:** matrícula, ano, marca, modelo, placa, categoria, valor da diária e tipo de proprietário.
+- 🌱 **Frota inicial (seed):** 12 veículos cadastrados automaticamente no primeiro start, caso o banco esteja vazio.
 - 🛡️ **Controle de acesso por perfil:** ações de avaliação restritas ao perfil `AGENTE`.
 
 ---
@@ -84,7 +87,8 @@ Sobre os dados do domínio:
 - **Build Tool:** Vite
 - **Roteamento:** React Router DOM
 - **HTTP:** Axios
-- **Estilização:** CSS puro (Design System simples)
+- **Estilização:** CSS puro (Design System simples, paleta azul)
+- **Imagens dos veículos:** CDN público [Imagin.studio](https://www.imagin.studio/) (renderização por marca/modelo), com fallback para ilustração SVG local
 
 ---
 
@@ -111,7 +115,18 @@ Decisões arquiteturais:
 
 - **Autenticação própria (Spring Security + JWT)** com usuários armazenados no PostgreSQL do Supabase, mantendo toda a regra de login no back-end.
 - **API stateless:** o token JWT é enviado no cabeçalho `Authorization: Bearer <token>`.
-- **Supabase** é utilizado como banco PostgreSQL gerenciado, via conexão JDBC padrão.
+- **Supabase** é utilizado como banco PostgreSQL gerenciado, via conexão JDBC padrão (Session Pooler, compatível com IPv4).
+
+---
+
+## 🚘 Catálogo de Frota
+
+A tela **Frota** apresenta os automóveis em cards modernos (paleta azul), com filtro por categoria e a **foto real** de cada modelo.
+
+- **Frota inicial (seed):** na primeira inicialização do back-end, caso a tabela de automóveis esteja vazia, são cadastrados 12 veículos de exemplo. A frota foi inspirada nas categorias típicas de locadoras brasileiras (econômico, intermediário, sedã, SUV, premium e utilitário), usando modelos de veículos reais (ex.: Fiat Mobi, Renault Kwid, Chevrolet Onix, Hyundai HB20, Volkswagen Virtus, Toyota Corolla, Hyundai Creta, Jeep Compass, Fiat Strada).
+- **Imagens:** as fotos são obtidas em tempo de execução do CDN público da Imagin.studio, a partir da marca e do modelo. Caso uma imagem não carregue (sem internet ou modelo indisponível no CDN), o card exibe automaticamente uma ilustração SVG como fallback.
+
+> As marcas e modelos citados são apenas dos veículos de exemplo da frota; o projeto não representa nem utiliza a identidade visual oficial de nenhuma locadora específica.
 
 ---
 
@@ -225,9 +240,9 @@ O front-end estará disponível em **http://localhost:5173**.
     ├── vite.config.js           # ⚙️ Configuração do Vite
     ├── index.html
     └── src/
-        ├── components/          # 🧱 Componentes (Layout, ProtectedRoute)
-        ├── pages/               # 📄 Páginas (Login, Registro, Clientes, Pedidos)
-        ├── services/            # 🔌 Chamadas HTTP (Axios)
+        ├── components/          # 🧱 Componentes (Layout, ProtectedRoute, Logo, CarImage, CarIcon)
+        ├── pages/               # 📄 Páginas (Login, Registro, Automoveis, Clientes, Pedidos)
+        ├── services/            # 🔌 Chamadas HTTP (Axios) e helper de imagem dos carros
         ├── context/             # 🧠 Contexto de autenticação
         └── styles/              # 🎨 Estilos globais
 ```
@@ -283,8 +298,11 @@ Principais rotas:
 | POST | `/api/clientes` | Criar cliente | Autenticado |
 | PUT | `/api/clientes/{id}` | Atualizar cliente | Autenticado |
 | DELETE | `/api/clientes/{id}` | Remover cliente | Autenticado |
-| GET | `/api/automoveis` | Listar automóveis | Autenticado |
+| GET | `/api/automoveis` | Listar a frota de automóveis | Autenticado |
+| GET | `/api/automoveis/{id}` | Buscar automóvel por id | Autenticado |
 | POST | `/api/automoveis` | Cadastrar automóvel | Autenticado |
+| PUT | `/api/automoveis/{id}` | Atualizar automóvel | Autenticado |
+| DELETE | `/api/automoveis/{id}` | Remover automóvel | Autenticado |
 | GET | `/api/pedidos` | Listar pedidos | Autenticado |
 | POST | `/api/pedidos/cliente/{clienteId}` | Criar pedido | Autenticado |
 | PUT | `/api/pedidos/{id}/cancelar` | Cancelar pedido | Autenticado |
