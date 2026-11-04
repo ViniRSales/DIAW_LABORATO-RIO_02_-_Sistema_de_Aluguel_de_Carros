@@ -17,7 +17,7 @@ export default function Login() {
     setCarregando(true)
     try {
       await login(username, senha)
-      navigate('/clientes')
+      navigate('/automoveis')
     } catch (err) {
       setErro(err.response?.data?.mensagem || 'Falha no login. Verifique as credenciais.')
     } finally {

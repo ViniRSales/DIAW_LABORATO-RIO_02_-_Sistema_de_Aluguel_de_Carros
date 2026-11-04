@@ -110,7 +110,9 @@ export default function Pedidos() {
             <select name="automovelId" value={form.automovelId} onChange={handleChange} required>
               <option value="">Selecione...</option>
               {automoveis.map((a) => (
-                <option key={a.id} value={a.id}>{a.marca} {a.modelo} - {a.placa}</option>
+                <option key={a.id} value={a.id}>
+                  {a.marca} {a.modelo} ({a.ano}){a.categoria ? ` - ${a.categoria}` : ''}{a.valorDiaria != null ? ` - R$ ${Number(a.valorDiaria).toFixed(2)}/dia` : ''}
+                </option>
               ))}
             </select>
           </label>

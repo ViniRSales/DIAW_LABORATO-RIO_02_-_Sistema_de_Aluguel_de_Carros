@@ -40,7 +40,12 @@ yarn-error.log*
 # ===== Arquivos temporarios de build/execucao/teste =====
 run-log.txt
 build-log.txt
+compile-log.txt
+build-fe-log.txt
 npm-install-log.txt
 npm-build-log.txt
+porta.txt
 api-test*.txt
 api-test*.ps1
+check-frota*
+*-log.txt

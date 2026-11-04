@@ -64,6 +64,8 @@ public class AutomovelService {
         automovel.setModelo(request.modelo());
         automovel.setPlaca(request.placa());
         automovel.setTipoProprietario(request.tipoProprietario());
+        automovel.setCategoria(request.categoria());
+        automovel.setValorDiaria(request.valorDiaria());
     }
 
     private AutomovelResponse toResponse(Automovel a) {
@@ -74,7 +76,9 @@ public class AutomovelService {
                 a.getMarca(),
                 a.getModelo(),
                 a.getPlaca(),
-                a.getTipoProprietario()
+                a.getTipoProprietario(),
+                a.getCategoria(),
+                a.getValorDiaria()
         );
     }
 }

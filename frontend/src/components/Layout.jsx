@@ -16,6 +16,7 @@ export default function Layout() {
       <header className="navbar">
         <div className="navbar-brand">🚗 Aluguel de Carros</div>
         <nav className="navbar-links">
+          <Link to="/automoveis">Frota</Link>
           <Link to="/clientes">Clientes</Link>
           <Link to="/pedidos">Pedidos</Link>
         </nav>

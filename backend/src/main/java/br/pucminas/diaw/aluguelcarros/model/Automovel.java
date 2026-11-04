@@ -40,6 +40,12 @@ public class Automovel {
     @Column(name = "tipo_proprietario", length = 20)
     private TipoProprietario tipoProprietario;
 
+    @Column(length = 40)
+    private String categoria;
+
+    @Column(name = "valor_diaria", precision = 10, scale = 2)
+    private java.math.BigDecimal valorDiaria;
+
     public Automovel() {
     }
 
@@ -97,5 +103,21 @@ public class Automovel {
 
     public void setTipoProprietario(TipoProprietario tipoProprietario) {
         this.tipoProprietario = tipoProprietario;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public java.math.BigDecimal getValorDiaria() {
+        return valorDiaria;
+    }
+
+    public void setValorDiaria(java.math.BigDecimal valorDiaria) {
+        this.valorDiaria = valorDiaria;
     }
 }

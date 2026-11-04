@@ -20,7 +20,7 @@ export default function Registro() {
     setCarregando(true)
     try {
       await registrar(form)
-      navigate('/clientes')
+      navigate('/automoveis')
     } catch (err) {
       setErro(err.response?.data?.mensagem || 'Não foi possível concluir o cadastro.')
     } finally {
